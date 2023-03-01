@@ -1,5 +1,7 @@
 # image_transport_tutorials
 
+
+下方教程为galactic版本的ros2，若使用foxy需要将git clone命令改成git clone -b foxy https://github.com/ros-perception/image_transport_tutorials.git
 Before starting any of the tutorials below, create a workspace and clone this repository so you can inspect and manipulate the code:
 
 ```
