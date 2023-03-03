@@ -11,13 +11,17 @@ class NodeSubscribe(Node):
     def __init__(self,name):
         super().__init__(name)
         self.get_logger().info("大家好，我是listener:%s" % name)
+        self.publisher_ = self.create_publisher(Image, "processed_image_topic", 10)
  
     def callback(self,data):
         global bridge
         # ros2消息类型(imgmsg)转换为np.array
         cv_img = bridge.imgmsg_to_cv2(data, "bgr8") 
+        processed_img_msg = bridge.cv2_to_imgmsg(cv_img, "bgr8")
+        self.publisher_.publish(processed_img_msg)
         cv2.imshow("frame" , cv_img) # 显示接受到的图像数据
-        cv2.waitKey(1)
+        cv2.waitKey(10)
+        
  
 def main(args=None):
     rclpy.init()
