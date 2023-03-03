@@ -4,6 +4,7 @@ from rclpy.node import Node
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
+from detection import *
  
 bridge = CvBridge() # 转换为ros2的消息类型(imgmsg)的工具
  
@@ -17,11 +18,9 @@ class NodeSubscribe(Node):
         global bridge
         # ros2消息类型(imgmsg)转换为np.array
         cv_img = bridge.imgmsg_to_cv2(data, "bgr8") 
+        cv_img = operation(cv_img)
         processed_img_msg = bridge.cv2_to_imgmsg(cv_img, "bgr8")
         self.publisher_.publish(processed_img_msg)
-        cv2.imshow("frame" , cv_img) # 显示接受到的图像数据
-        cv2.waitKey(10)
-        
  
 def main(args=None):
     rclpy.init()
